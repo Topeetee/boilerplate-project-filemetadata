@@ -32,14 +32,15 @@ var upload = multer({ dest: 'uploads/' });
 
 app.post('/api/fileanalyse', upload.single('upfile'), (req, res) => {
   // File has been uploaded successfully
-  const { originalname, mimetype, size } = req.file;
-  try{
+  try {
+    const { originalname, mimetype, size } = req.file;
     res.json({ filename: originalname, type: mimetype, size });
-  }catch(err){
-    res.json(err)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while processing the file' });
   }
-  
 });
+
 
 
 
